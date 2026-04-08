@@ -1,0 +1,1663 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>System Auto Lab</title>
+  <style>
+    :root {
+      --bg: #05070d;
+      --bg-soft: #0b1220;
+      --panel: #0f1728;
+      --panel-2: #101b2f;
+      --line: rgba(255,255,255,0.08);
+      --text: #f4f7fb;
+      --muted: #aab4c7;
+
+      --blue: #7fdfff;
+      --blue-2: #2ca7ff;
+      --green: #8effcb;
+      --green-2: #35d48d;
+      --violet: #ab86ff;
+
+      --shadow: 0 24px 60px rgba(0,0,0,0.35);
+      --radius: 24px;
+      --radius-lg: 32px;
+      --max: 1280px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 12% 12%, rgba(44,167,255,0.12), transparent 20%),
+        radial-gradient(circle at 88% 12%, rgba(171,134,255,0.10), transparent 18%),
+        radial-gradient(circle at 50% 88%, rgba(53,212,141,0.08), transparent 24%),
+        linear-gradient(180deg, #05070d 0%, #09111e 40%, #05070d 100%);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 40px 40px;
+      opacity: 0.35;
+      z-index: 0;
+    }
+
+    .page {
+      position: relative;
+      z-index: 1;
+    }
+
+    .wrap {
+      width: calc(100% - 32px);
+      max-width: var(--max);
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(16px);
+      background: rgba(5,7,13,0.86);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .topbar-inner {
+      min-height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .brand-mark {
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,0.92), transparent 18%),
+        linear-gradient(135deg, rgba(127,223,255,0.95), rgba(142,255,203,0.85));
+      box-shadow: 0 0 24px rgba(44,167,255,0.20);
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .brand-mark::after {
+      content: "";
+      position: absolute;
+      width: 32px;
+      height: 2px;
+      left: 8px;
+      top: 22px;
+      transform: rotate(-25deg);
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.95), transparent);
+    }
+
+    .brand-text strong {
+      display: block;
+      font-size: 16px;
+      letter-spacing: 0.02em;
+    }
+
+    .brand-text span {
+      display: block;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .nav {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .nav a {
+      text-decoration: none;
+      color: #dbe7fb;
+      padding: 10px 14px;
+      border-radius: 999px;
+      transition: 0.2s ease;
+    }
+
+    .nav a:hover {
+      background: rgba(255,255,255,0.06);
+    }
+
+    .nav .nav-cta {
+      border: 1px solid rgba(127,223,255,0.26);
+    }
+
+    .hero {
+      padding: 42px 0 26px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.12fr 0.88fr;
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .hero-copy,
+    .hero-visual {
+      background: linear-gradient(180deg, rgba(15,23,40,0.95), rgba(10,16,28,0.96));
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero-copy {
+      padding: 42px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(127,223,255,0.08);
+      border: 1px solid rgba(127,223,255,0.18);
+      color: #e3fbff;
+      font-size: 13px;
+      margin-bottom: 18px;
+    }
+
+    .badge-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 12px var(--green);
+      flex: 0 0 auto;
+    }
+
+    h1 {
+      margin: 0 0 16px;
+      font-size: clamp(38px, 6vw, 72px);
+      line-height: 0.95;
+      letter-spacing: -0.05em;
+    }
+
+    .accent {
+      background: linear-gradient(90deg, var(--blue), #ffffff 35%, var(--green));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .lead {
+      margin: 0;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.75;
+      max-width: 760px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 26px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0 18px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.2s ease;
+      border: 1px solid transparent;
+      white-space: nowrap;
+      width: auto;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--blue), var(--green));
+      color: #081019;
+      box-shadow: 0 10px 24px rgba(44,167,255,0.18);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.03);
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.04);
+      border-color: rgba(255,255,255,0.10);
+      color: #eef5ff;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255,255,255,0.07);
+      transform: translateY(-2px);
+    }
+
+    .hero-stats {
+      margin-top: 28px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    .stat {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 18px;
+      padding: 16px;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 20px;
+      margin-bottom: 6px;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .hero-visual {
+      min-height: 620px;
+      background:
+        radial-gradient(circle at 78% 22%, rgba(127,223,255,0.18), transparent 18%),
+        radial-gradient(circle at 24% 80%, rgba(53,212,141,0.12), transparent 22%),
+        linear-gradient(180deg, rgba(13,21,37,0.98), rgba(8,13,24,0.98));
+    }
+
+    .hero-frame {
+      position: absolute;
+      inset: 22px;
+      border-radius: 28px;
+      border: 1px solid rgba(255,255,255,0.08);
+      overflow: hidden;
+      background:
+        linear-gradient(rgba(127,223,255,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(127,223,255,0.05) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(11,18,31,0.86), rgba(8,13,22,0.96));
+      background-size: 34px 34px, 34px 34px, auto;
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(1px);
+    }
+
+    .orb-1 {
+      width: 260px;
+      height: 260px;
+      right: -70px;
+      top: 8px;
+      background: radial-gradient(circle, rgba(127,223,255,0.35), rgba(127,223,255,0) 70%);
+    }
+
+    .orb-2 {
+      width: 230px;
+      height: 230px;
+      left: -60px;
+      bottom: 0;
+      background: radial-gradient(circle, rgba(53,212,141,0.20), rgba(53,212,141,0) 72%);
+    }
+
+    .ring {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 280px;
+      height: 280px;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      border: 1px solid rgba(127,223,255,0.20);
+      box-shadow:
+        0 0 0 16px rgba(127,223,255,0.03),
+        0 0 50px rgba(44,167,255,0.12),
+        inset 0 0 34px rgba(127,223,255,0.08);
+    }
+
+    .ring::before,
+    .ring::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      inset: 18px;
+      border: 1px solid rgba(142,255,203,0.15);
+    }
+
+    .ring::after {
+      inset: 42px;
+      border-color: rgba(171,134,255,0.14);
+    }
+
+    .core {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 110px;
+      height: 110px;
+      transform: translate(-50%, -50%) rotate(45deg);
+      border-radius: 24px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,0.92), rgba(255,255,255,0) 24%),
+        linear-gradient(145deg, rgba(127,223,255,0.72), rgba(53,212,141,0.28));
+      box-shadow:
+        0 0 36px rgba(127,223,255,0.25),
+        inset 0 0 20px rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.10);
+    }
+
+    .hud {
+      position: absolute;
+      width: 230px;
+      padding: 14px;
+      border-radius: 18px;
+      background: rgba(10,18,31,0.78);
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 14px 28px rgba(0,0,0,0.22);
+    }
+
+    .hud strong {
+      display: block;
+      font-size: 15px;
+      margin-bottom: 6px;
+    }
+
+    .hud span {
+      display: block;
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--muted);
+    }
+
+    .hud-a { left: 24px; top: 24px; }
+    .hud-b { right: 24px; top: 92px; }
+    .hud-c { left: 24px; bottom: 26px; }
+    .hud-d { right: 24px; bottom: 36px; }
+
+    .section {
+      padding: 56px 0 10px;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      margin-bottom: 22px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      margin-bottom: 10px;
+      color: var(--blue);
+      text-transform: uppercase;
+      font-size: 12px;
+      letter-spacing: 0.16em;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: clamp(30px, 4vw, 46px);
+      letter-spacing: -0.04em;
+    }
+
+    .section-head p {
+      margin: 0;
+      color: var(--muted);
+      max-width: 820px;
+      line-height: 1.72;
+    }
+
+    .offer-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+    }
+
+    .offer-card,
+    .sub-card,
+    .why-card,
+    .step-card,
+    .faq-item,
+    .news-card,
+    .contact-card,
+    .chat-card,
+    .cta-band {
+      background: linear-gradient(180deg, rgba(15,23,40,0.95), rgba(10,16,28,0.96));
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .offer-card {
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      min-height: 100%;
+    }
+
+    .offer-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: flex-start;
+      margin-bottom: 10px;
+    }
+
+    .offer-top h3 {
+      margin: 0;
+      font-size: 18px;
+      letter-spacing: -0.02em;
+    }
+
+    .tag {
+      display: inline-flex;
+      padding: 7px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: #e8f6ff;
+      white-space: nowrap;
+    }
+
+    .offer-desc {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+      min-height: 70px;
+      margin: 0 0 12px;
+    }
+
+    .tier {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 18px;
+      padding: 14px;
+      margin-top: 10px;
+    }
+
+    .tier-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: baseline;
+      margin-bottom: 8px;
+    }
+
+    .tier-head strong {
+      font-size: 15px;
+    }
+
+    .tier-price {
+      color: #ffffff;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .tier p {
+      margin: 0 0 10px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .chips {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+
+    .chip {
+      font-size: 11px;
+      padding: 5px 8px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.06);
+      color: #dce9ff;
+    }
+
+    .buy-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 38px;
+      padding: 0 14px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 14px;
+      background: linear-gradient(135deg, var(--blue), var(--green));
+      color: #081019;
+      width: auto;
+    }
+
+    .buy-link:hover {
+      filter: brightness(1.03);
+      transform: translateY(-1px);
+    }
+
+    .subs-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+    }
+
+    .sub-card {
+      padding: 20px;
+    }
+
+    .sub-badge {
+      display: inline-flex;
+      padding: 7px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      color: #e8faff;
+      background: rgba(127,223,255,0.08);
+      border: 1px solid rgba(127,223,255,0.16);
+      margin-bottom: 12px;
+    }
+
+    .sub-card h3 {
+      margin: 0 0 8px;
+      font-size: 18px;
+    }
+
+    .sub-price {
+      font-size: 22px;
+      font-weight: bold;
+      line-height: 1.15;
+      margin-bottom: 10px;
+    }
+
+    .sub-price span {
+      display: block;
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: normal;
+      margin-top: 4px;
+    }
+
+    .sub-card p {
+      margin: 0 0 14px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+    .list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 16px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .list li {
+      position: relative;
+      padding-left: 16px;
+      color: #deebff;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .list li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 7px;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: linear-gradient(180deg, var(--blue), var(--green));
+      box-shadow: 0 0 10px rgba(127,223,255,0.45);
+    }
+
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .why-card {
+      padding: 22px;
+    }
+
+    .why-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .step-card {
+      padding: 22px;
+    }
+
+    .step-number {
+      width: 40px;
+      height: 40px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--blue), var(--green));
+      color: #081019;
+      font-weight: bold;
+      margin-bottom: 12px;
+    }
+
+    .step-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.66;
+      font-size: 14px;
+    }
+
+    .faq-wrap {
+      display: grid;
+      gap: 12px;
+    }
+
+    .faq-item {
+      padding: 18px;
+      overflow: hidden;
+    }
+
+    .faq-button {
+      width: 100%;
+      background: none;
+      border: none;
+      color: #ffffff;
+      font: inherit;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      padding: 0;
+      font-weight: bold;
+    }
+
+    .faq-answer {
+      display: none;
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .faq-item.open .faq-answer {
+      display: block;
+    }
+
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .news-card {
+      padding: 22px;
+    }
+
+    .news-card .k {
+      display: inline-block;
+      color: var(--blue);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      margin-bottom: 10px;
+    }
+
+    .news-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.66;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 16px;
+    }
+
+    .contact-card,
+    .chat-card {
+      padding: 24px;
+    }
+
+    .contact-card p,
+    .chat-card p {
+      margin: 0 0 16px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .contact-links {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .contact-link {
+      display: inline-flex;
+      align-items: center;
+      min-height: 40px;
+      padding: 0 14px;
+      border-radius: 999px;
+      text-decoration: none;
+      color: #eaf5ff;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .contact-link:hover {
+      background: rgba(255,255,255,0.07);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    .field label {
+      font-size: 14px;
+      color: #d9e6f8;
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      padding: 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.04);
+      color: #ffffff;
+      font: inherit;
+      outline: none;
+    }
+
+    .field textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      border-color: rgba(127,223,255,0.24);
+      box-shadow: 0 0 0 3px rgba(127,223,255,0.08);
+    }
+
+    .form-note {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .chat-window {
+      display: grid;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .chat-bubble {
+      max-width: 88%;
+      padding: 12px 14px;
+      border-radius: 16px;
+      line-height: 1.6;
+      font-size: 14px;
+      border: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .chat-ai {
+      background: rgba(127,223,255,0.08);
+      color: #eafcff;
+      justify-self: start;
+    }
+
+    .chat-user {
+      background: rgba(255,255,255,0.05);
+      color: #eef5ff;
+      justify-self: end;
+    }
+
+    .chat-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+
+    .cta-band {
+      padding: 26px;
+    }
+
+    .cta-band h3 {
+      margin: 0 0 8px;
+      font-size: 30px;
+      letter-spacing: -0.04em;
+    }
+
+    .cta-band p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 840px;
+    }
+
+    .footer {
+      padding: 30px 0 46px;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .footer-left strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .footer-left span {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 10px 14px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      text-decoration: none;
+      color: #c6d7ef;
+    }
+
+    .floating-contact {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 95;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 14px;
+      border-radius: 999px;
+      text-decoration: none;
+      color: #081019;
+      font-weight: bold;
+      background: linear-gradient(135deg, var(--blue), var(--green));
+      box-shadow: 0 16px 36px rgba(50,169,255,0.18);
+    }
+
+    @media (max-width: 1280px) {
+      .offer-grid,
+      .subs-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 1080px) {
+      .hero-grid,
+      .why-grid,
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-stats,
+      .news-grid,
+      .process-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 760px) {
+      .topbar-inner {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px 0;
+      }
+
+      .nav {
+        width: 100%;
+        justify-content: flex-start;
+      }
+
+      .hero-copy {
+        padding: 24px;
+      }
+
+      .hero-visual {
+        min-height: 500px;
+      }
+
+      .offer-grid,
+      .subs-grid,
+      .hero-stats,
+      .news-grid,
+      .process-grid,
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hud {
+        position: static;
+        width: auto;
+        margin: 0 12px 10px;
+      }
+
+      .hero-frame {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+      }
+
+      .floating-contact span:last-child {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="topbar">
+      <div class="wrap topbar-inner">
+        <a href="#top" class="brand">
+          <div class="brand-mark"></div>
+          <div class="brand-text">
+            <strong>System Auto Lab</strong>
+            <span>Design vivant, logique reelle.</span>
+          </div>
+        </a>
+
+        <nav class="nav">
+          <a href="#offres">Offres</a>
+          <a href="#abonnements">Abonnements</a>
+          <a href="#process">Process</a>
+          <a href="#faq">FAQ</a>
+          <a href="#contact" class="nav-cta">Reserver un echange</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="top" class="wrap">
+      <section class="hero">
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <div class="badge">
+              <span class="badge-dot"></span>
+              5 offres principales, 3 formats par offre, 5 abonnements IA
+            </div>
+
+            <h1>
+              Automatisez votre activite
+              <span class="accent">sans perdre en controle</span>
+            </h1>
+
+            <p class="lead">
+              Des systemes prets a l emploi pour accueillir vos prospects, produire votre contenu,
+              fluidifier votre tunnel, alleger votre SAV et structurer votre back office.
+            </p>
+
+            <div class="hero-actions">
+              <a href="#offres" class="btn btn-primary">Voir les offres</a>
+              <a href="#contact" class="btn btn-secondary">Reserver un echange</a>
+            </div>
+
+            <div class="hero-stats">
+              <div class="stat">
+                <strong>Moins de repetition</strong>
+                <span>Automatisez ce qui ralentit votre activite</span>
+              </div>
+              <div class="stat">
+                <strong>Plus de clarte</strong>
+                <span>Des systemes simples a comprendre et a activer</span>
+              </div>
+              <div class="stat">
+                <strong>Plus de temps</strong>
+                <span>Recentrez-vous sur votre vrai travail</span>
+              </div>
+              <div class="stat">
+                <strong>Activation rapide</strong>
+                <span>Choisissez une offre et le bon niveau</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-visual">
+            <div class="hero-frame">
+              <div class="orb orb-1"></div>
+              <div class="orb orb-2"></div>
+              <div class="ring"></div>
+              <div class="core"></div>
+
+              <div class="hud hud-a">
+                <strong>Receptionniste IA</strong>
+                <span>Accueille et qualifie les demandes plus proprement.</span>
+              </div>
+
+              <div class="hud hud-b">
+                <strong>Machine a contenu</strong>
+                <span>Aide a produire et diffuser avec plus de regularite.</span>
+              </div>
+
+              <div class="hud hud-c">
+                <strong>Tunnel et SAV</strong>
+                <span>Convertit mieux et reduit la friction client.</span>
+              </div>
+
+              <div class="hud hud-d">
+                <strong>Back Office automatise</strong>
+                <span>Remet de l ordre dans l execution interne.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="offres">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">offres</span>
+            <h2>Choisissez le systeme qui debloque votre activite</h2>
+          </div>
+          <p>
+            Chaque offre repond a un besoin concret du marche : mieux accueillir,
+            mieux produire, mieux convertir, mieux repondre, mieux organiser.
+          </p>
+        </div>
+
+        <div class="offer-grid">
+          <article class="offer-card">
+            <div class="offer-top">
+              <h3>Receptionniste IA</h3>
+              <span class="tag">accueil</span>
+            </div>
+            <p class="offer-desc">Pour ne plus perdre de temps sur les premiers echanges, les demandes repetitives et la qualification des prospects.</p>
+
+            <div class="tier">
+              <div class="tier-head"><strong>Starter</strong><span class="tier-price">49 EUR</span></div>
+              <p>Pose une premiere base d accueil automatise simple et utile.</p>
+              <div class="chips"><span class="chip">accueil</span><span class="chip">tri</span></div>
+              <a class="buy-link" href="https://buy.stripe.com/eVq00i3Th1f9aKG57A0RG08" target="_blank">Activer</a>
+            </div>
+
+            <div class="tier">
+              <div class="tier-head"><strong>Pro</strong><span class="tier-price">149 EUR</span></div>
+              <p>Renforce la qualification et l orientation des demandes.</p>
+              <div class="chips"><span class="chip">qualification</span><span class="chip">pro</span></div>
+              <a class="buy-link" href="https://buy.stripe.com/6oUaEW1L91f99GCcA20RG09" target="_blank">Activer</a>
+            </div>
+
+            <div class="tier">
+              <div class="tier-head"><strong>Premium</strong><span class="tier-price">299 EUR</span></div>
+              <p>Version la plus complete pour une experience d accueil plus premium.</p>
+              <div class="chips"><span class="chip">premium</span><span class="chip">pipeline</span></div>
+              <a class="buy-link" href="https://buy.stripe.com/00w5kC0H52jd4migQi0RG0a" target="_blank">Activer</a>
+            </div>
+          </article>
+
+          <article class="offer-card">
+            <div class="offer-top">
+              <h3>Machine a contenu</h3>
+              <span class="tag">contenu</span>
+            </div>
+            <p class="offer-desc">Pour produire plus regulierement, mieux organiser vos idees et garder un flux de contenu vivant sans vous epuiser.</p>
+
+            <div class="tier">
+              <div class="tier-head"><strong>Starter</strong><span class="tier-price">79 EUR</span></div>
+              <p>Lance une premiere machine a contenu plus stable.</p>
+              <div class="chips"><span class="chip">base</span><span class="chip">contenu</span></div>
+              <a class="buy-link" href="https://buy.stripe.com/4gMcN49dBf5Z7yugQi0RG0b" target="_blank">Activer</a>
+            </div>
+
+            <div class="tier">
+              <div class="tier-head"><strong>Pro</strong><span class="tier-price">199 EUR</span></div>
+              <p>Structure mieux le workflow de production et de diffusion.</p>
+              <div class="chips"><span class="chip">workflow</span><span class="chip">pro</span></div>
+              <a class="buy-link" href="https://buy.stripe.com/4gMbJ0cpN7Dx8Cy6bE0RG0c" target="_blank">Activer</a>
+            </div>
+
+            <div class="tier">
+              <div class="tier-head"><strong>Premium</strong><span class="tier-price">399 EUR</span></div>
+              <p>Pousse le moteur de contenu plus loin en rythme et en volume.</p>
+              <div class="chips"><span class="chip">premium</span><span class="chip">scale</span></div>
+              <a class="buy-link" href="https://buy.stripe.com/eVqeVcgG3e1V2ea1Vo0RG0d" target="_blank">Activer</a>
+            </div>
+          </article>
+
+          <article class="offer-card">
+            <div class="offer-top">
+              <h3>Tunnel automatise</h3>
+              <span class="tag">conversion</span>
+            </div>
+            <p class="offer-desc">Pour transformer plus clairement l interet en action, et rendre votre parcours client plus fluide.</p>
+
+            <div class="tier">
+              <div class="tier-head"><strong>Starter</strong><span class="tier-price">99 EUR</span></div>
+              <p>Pose une premiere structure de tunnel claire et directe.</p>
+              <div class="chips"><span class="chip">tunnel</span><span class="chip">base</span></div>
+              <a class="buy-link" href="https://buy.stripe.com/28EeVccpN5vp3ie43w0RG0e" target="_blank">Activer</a>
+            </div>
+
+            <div class="tier">
+              <div class="tier-head"><strong>Pro</strong><span class="tier-price">249 EUR</span></div>
+              <p>Rend le parcours plus coherent entre interet et passage a l action.</p>
+              <div class="chips"><span class="chip">conversion</span><span class="chip">pro</span></div>
+              <a class="buy-link" href="https://buy.stripe.com/28EfZgahFaPJ7yugQi0RG0f" target="_blank">Activer</a>
+            </div>
+
+            <div class="tier">
+              <div class="tier-head"><strong>Premium</strong><span class="tier-price">499 EUR</span></div>
+              <p>Version la plus dense pour renforcer la logique du tunnel.</p>
+              <div class="chips"><span class="chip">premium</span><span class="chip">avance</span></div>
+              <a class="buy-link" href="https://buy.stripe.com/bJe5kCcpN5vp0628jM0RG0g" target="_blank">Activer</a>
+            </div>
+          </article>
+
+          <article class="offer-card">
+            <div class="offer-top">
+              <h3>SAV automatise</h3>
+              <span class="tag">support</span>
+            </div>
+            <p class="offer-desc">Pour repondre plus vite, reduire la charge mentale du support et garder une meilleure qualite de suivi.</p>
+
+            <div class="tier">
+              <div class="tier-head"><strong>Starter</strong><span class="tier-price">demarrage</span></div>
+              <p>Fluidifie le support de base et les demandes repetitives.</p>
+              <div class="chips"><span class="chip">support</span><span class="chip">starter</span></div>
+              <a class="buy-link" href="https://buy.stripe.com/5kQ28q61p3nh1a61Vo0RG0h" target="_blank">Activer</a>
+            </div>
+
+            <div class="tier">
+              <div class="tier-head"><strong>Pro</strong><span class="tier-price">renforce</span></div>
+              <p>Renforce la structure SAV et la qualite de reponse.</p>
+              <div class="chips"><span class="chip">sav</span><span class="chip">pro</span></div>
+              <a class="buy-link" href="https://buy.stripe.com/9B6bJ0fBZ7DxcSO7fI0RG0i" target="_blank">Activer</a>
+            </div>
+
+            <div class="tier">
+              <div class="tier-head"><strong>Premium</strong><span class="tier-price">dense</span></div>
+              <p>Version la plus complete pour un support plus large et mieux articule.</p>
+              <div class="chips"><span class="chip">premium</span><span class="chip">support</span></div>
+              <a class="buy-link" href="https://buy.stripe.com/aFa00i2Pd5vpbOKcA20RG0j" target="_blank">Activer</a>
+            </div>
+          </article>
+
+          <article class="offer-card">
+            <div class="offer-top">
+              <h3>Back office automatise</h3>
+              <span class="tag">interne</span>
+            </div>
+            <p class="offer-desc">Pour alleger les taches internes, remettre de l ordre dans le fonctionnement et eviter les pertes d energie invisibles.</p>
+
+            <div class="tier">
+              <div class="tier-head"><strong>Starter</strong><span class="tier-price">structure</span></div>
+              <p>Pose une base plus claire dans les operations internes.</p>
+              <div class="chips"><span class="chip">ops</span><span class="chip">starter</span></div>
+              <a class="buy-link" href="https://buy.stripe.com/aFa7sK1L91f91a66bE0RG0k" target="_blank">Activer</a>
+            </div>
+
+            <div class="tier">
+              <div class="tier-head"><strong>Pro</strong><span class="tier-price">renforce</span></div>
+              <p>Rend le fonctionnement interne plus propre et plus fluide.</p>
+              <div class="chips"><span class="chip">back office</span><span class="chip">pro</span></div>
+              <a class="buy-link" href="https://buy.stripe.com/fZucN4dtR3nhf0W2Zs0RG0l" target="_blank">Activer</a>
+            </div>
+
+            <div class="tier">
+              <div class="tier-head"><strong>Premium</strong><span class="tier-price">avance</span></div>
+              <p>Pousse plus loin l automatisation du fonctionnement interne.</p>
+              <div class="chips"><span class="chip">premium</span><span class="chip">interne</span></div>
+              <a class="buy-link" href="https://buy.stripe.com/28E6oGfBZf5Z4mi2Zs0RG0m" target="_blank">Activer</a>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="abonnements">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">abonnements</span>
+            <h2>Faites evoluer votre systeme dans le temps</h2>
+          </div>
+          <p>
+            Une fois votre base activee, ces abonnements vous permettent d ameliorer,
+            maintenir ou accelerer votre systeme selon votre rythme et vos objectifs.
+          </p>
+        </div>
+
+        <div class="subs-grid">
+          <article class="sub-card">
+            <span class="sub-badge">care</span>
+            <h3>Systeme Care IA</h3>
+            <div class="sub-price">Support continu<span>abonnement IA</span></div>
+            <p>Pour garder votre systeme propre, stable et bien suivi dans le temps.</p>
+            <ul class="list">
+              <li>Suivi continu</li>
+              <li>Maintenance logique</li>
+              <li>Stabilite generale</li>
+            </ul>
+            <a href="https://buy.stripe.com/3cIcN44Xl7Dx0626bE0RG0n" target="_blank" class="btn btn-secondary">Activer</a>
+          </article>
+
+          <article class="sub-card">
+            <span class="sub-badge">content</span>
+            <h3>Content Engine IA</h3>
+            <div class="sub-price">Moteur contenu<span>abonnement IA</span></div>
+            <p>Pour faire tourner votre logique contenu de maniere plus reguliere.</p>
+            <ul class="list">
+              <li>Production assistee</li>
+              <li>Continuite du flux</li>
+              <li>Rythme plus stable</li>
+            </ul>
+            <a href="https://buy.stripe.com/9B66oG89x9LF9GC0Rk0RG0o" target="_blank" class="btn btn-secondary">Activer</a>
+          </article>
+
+          <article class="sub-card">
+            <span class="sub-badge">growth</span>
+            <h3>Growth System IA</h3>
+            <div class="sub-price">Croissance structuree<span>abonnement IA</span></div>
+            <p>Pour faire progresser votre systeme de maniere plus offensive et plus reguliere.</p>
+            <ul class="list">
+              <li>Montee en puissance</li>
+              <li>Evolution du systeme</li>
+              <li>Amelioration continue</li>
+            </ul>
+            <a href="https://buy.stripe.com/7sY14mcpN5vp5qm43w0RG0p" target="_blank" class="btn btn-primary">Activer</a>
+          </article>
+
+          <article class="sub-card">
+            <span class="sub-badge">scale</span>
+            <h3>AutoScale IA</h3>
+            <div class="sub-price">Montee automatique<span>abonnement IA</span></div>
+            <p>Pour pousser plus loin la logique de scaling avec une base plus automatisee.</p>
+            <ul class="list">
+              <li>Extension du systeme</li>
+              <li>Amplification progressive</li>
+              <li>Automatisation plus large</li>
+            </ul>
+            <a href="https://buy.stripe.com/7sY8wO4Xle1V1a60Rk0RG0q" target="_blank" class="btn btn-secondary">Activer</a>
+          </article>
+
+          <article class="sub-card">
+            <span class="sub-badge">flow</span>
+            <h3>Client Flow IA</h3>
+            <div class="sub-price">Flux client continu<span>abonnement IA</span></div>
+            <p>Pour ameliorer le mouvement client, le suivi et la continuite du parcours.</p>
+            <ul class="list">
+              <li>Fluidite du parcours</li>
+              <li>Moins de friction</li>
+              <li>Continuite client</li>
+            </ul>
+            <a href="https://buy.stripe.com/dRm6oG4XlcXR1a62Zs0RG0r" target="_blank" class="btn btn-secondary">Activer</a>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">pourquoi nous</span>
+            <h2>Pourquoi choisir System Auto Lab</h2>
+          </div>
+          <p>
+            Vous n achetez pas de la theorie. Vous choisissez un systeme pense pour resoudre
+            un point precis de votre activite.
+          </p>
+        </div>
+
+        <div class="why-grid">
+          <article class="why-card">
+            <h3>Des solutions concretes</h3>
+            <p>Chaque offre repond a un besoin reel : accueil, contenu, tunnel, support ou organisation interne.</p>
+          </article>
+          <article class="why-card">
+            <h3>Un gain de temps reel</h3>
+            <p>Moins de repetition, moins de friction, plus d energie pour ce qui compte vraiment.</p>
+          </article>
+          <article class="why-card">
+            <h3>Une montee en puissance simple</h3>
+            <p>Commencez avec une base claire, puis faites evoluer votre systeme a votre rythme.</p>
+          </article>
+          <article class="why-card">
+            <h3>Une approche premium et lisible</h3>
+            <p>Des offres comprehensibles, une presentation propre et une logique pensee pour des professionnels.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="process">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">process</span>
+            <h2>Comment ca se passe</h2>
+          </div>
+          <p>Un parcours simple pour rendre la decision plus nette et l entree plus rassurante.</p>
+        </div>
+
+        <div class="process-grid">
+          <article class="step-card">
+            <div class="step-number">01</div>
+            <h3>Vous choisissez votre besoin</h3>
+            <p>Accueil, contenu, tunnel, SAV ou back office.</p>
+          </article>
+          <article class="step-card">
+            <div class="step-number">02</div>
+            <h3>Vous choisissez votre niveau</h3>
+            <p>Starter, Pro ou Premium selon votre activite.</p>
+          </article>
+          <article class="step-card">
+            <div class="step-number">03</div>
+            <h3>Vous activez votre systeme</h3>
+            <p>Vous passez a une structure plus simple, plus claire et plus efficace.</p>
+          </article>
+          <article class="step-card">
+            <div class="step-number">04</div>
+            <h3>Vous faites evoluer si besoin</h3>
+            <p>Avec un abonnement IA, vous continuez a ameliorer votre systeme dans le temps.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="faq">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">faq</span>
+            <h2>Questions frequentes</h2>
+          </div>
+          <p>Une FAQ simple pour rassurer avant la prise de contact ou l achat direct.</p>
+        </div>
+
+        <div class="faq-wrap">
+          <article class="faq-item">
+            <button class="faq-button">
+              <span>Quelle offre choisir si je debute ?</span>
+              <span>+</span>
+            </button>
+            <div class="faq-answer">
+              Si vous debutez, choisissez simplement la zone qui vous ralentit le plus aujourd hui, puis entrez en Starter.
+            </div>
+          </article>
+
+          <article class="faq-item">
+            <button class="faq-button">
+              <span>Est-ce adapte a une petite activite ?</span>
+              <span>+</span>
+            </button>
+            <div class="faq-answer">
+              Oui. La logique Starter, Pro, Premium permet de commencer simplement puis de monter en puissance ensuite.
+            </div>
+          </article>
+
+          <article class="faq-item">
+            <button class="faq-button">
+              <span>Dois-je prendre un abonnement en plus ?</span>
+              <span>+</span>
+            </button>
+            <div class="faq-answer">
+              Non. Les abonnements servent a prolonger et entretenir la valeur du systeme, mais l activation initiale peut exister seule.
+            </div>
+          </article>
+
+          <article class="faq-item">
+            <button class="faq-button">
+              <span>Que faire si j ai plusieurs besoins a la fois ?</span>
+              <span>+</span>
+            </button>
+            <div class="faq-answer">
+              Dans ce cas, reservez un echange afin d identifier le meilleur point d entree pour votre situation.
+            </div>
+          </article>
+
+          <article class="faq-item">
+            <button class="faq-button">
+              <span>Le site est-il deja pret a etre utilise ?</span>
+              <span>+</span>
+            </button>
+            <div class="faq-answer">
+              Oui. La structure, les liens Stripe et la navigation sont en place. Il reste seulement a connecter le formulaire si vous voulez une entree automatisee reelle.
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">positionnement</span>
+            <h2>Une boutique claire, pas un labyrinthe</h2>
+          </div>
+          <p>
+            Ici, le client ne se perd pas dans une liste floue. Il voit les bons points d entree,
+            comprend les niveaux et peut agir rapidement.
+          </p>
+        </div>
+
+        <div class="news-grid">
+          <article class="news-card">
+            <span class="k">structure</span>
+            <h3>5 offres suffisent a clarifier l entree</h3>
+            <p>Au lieu d un empilement confus, le visiteur voit tout de suite les grandes zones d action.</p>
+          </article>
+          <article class="news-card">
+            <span class="k">hierarchie</span>
+            <h3>3 niveaux rendent la decision plus simple</h3>
+            <p>Pas trop de paliers, pas de confusion, juste une progression lisible.</p>
+          </article>
+          <article class="news-card">
+            <span class="k">continuite</span>
+            <h3>Les abonnements prolongent la valeur</h3>
+            <p>Ils donnent une suite logique au systeme au lieu d un achat ponctuel sans lendemain.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="contact">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">contact</span>
+            <h2>Parlez-nous de votre activite</h2>
+          </div>
+          <p>
+            Expliquez votre besoin, et nous vous orienterons vers le systeme le plus adapte a votre situation.
+          </p>
+        </div>
+
+        <div class="contact-grid">
+          <article class="contact-card">
+            <h3>Decrivez votre besoin</h3>
+            <p>Le but est d identifier l offre principale, le bon niveau et l eventuel abonnement a ajouter ensuite.</p>
+
+            <div class="contact-links">
+              <a class="contact-link" href="https://www.instagram.com/levif_automate?igsh=NW8yb2toYnMwajAw" target="_blank">Instagram</a>
+              <a class="contact-link" href="https://www.facebook.com/share/1HCPHCoUDj/" target="_blank">Facebook</a>
+              <a class="contact-link" href="#contact">Formulaire direct</a>
+            </div>
+
+            <form onsubmit="event.preventDefault(); alert('Formulaire pret a brancher ensuite a Make si besoin.');">
+              <div class="form-grid">
+                <div class="field">
+                  <label for="name">Nom</label>
+                  <input id="name" type="text" placeholder="Votre nom">
+                </div>
+
+                <div class="field">
+                  <label for="email">Email</label>
+                  <input id="email" type="email" placeholder="votre@email.com">
+                </div>
+
+                <div class="field">
+                  <label for="offer">Offre visee</label>
+                  <select id="offer">
+                    <option>Receptionniste IA</option>
+                    <option>Machine a contenu</option>
+                    <option>Tunnel automatise</option>
+                    <option>SAV automatise</option>
+                    <option>Back office automatise</option>
+                  </select>
+                </div>
+
+                <div class="field">
+                  <label for="level">Niveau vise</label>
+                  <select id="level">
+                    <option>Starter</option>
+                    <option>Pro</option>
+                    <option>Premium</option>
+                    <option>Je ne sais pas encore</option>
+                  </select>
+                </div>
+
+                <div class="field full">
+                  <label for="message">Besoin</label>
+                  <textarea id="message" placeholder="Decrivez votre besoin, ce que vous voulez automatiser, et ce qui vous ralentit aujourd hui."></textarea>
+                </div>
+              </div>
+
+              <div class="hero-actions" style="margin-top:16px;">
+                <button class="btn btn-primary" type="submit">Envoyer la demande</button>
+                <a href="#offres" class="btn btn-secondary">Revoir les offres</a>
+              </div>
+
+              <div class="form-note">
+                Cette version du formulaire est prete visuellement. Vous pourrez ensuite la connecter a Make, Gmail, Google Sheets ou autre.
+              </div>
+            </form>
+          </article>
+
+          <article class="chat-card">
+            <h3>Assistant - apercu</h3>
+            <p>Bloc conversationnel visuel en attendant un eventuel vrai module connecte.</p>
+
+            <div class="chat-window">
+              <div class="chat-bubble chat-ai">Bonjour. Quelle zone voulez-vous automatiser en priorite ?</div>
+              <div class="chat-bubble chat-user">J hesite entre Receptionniste IA et Tunnel automatise.</div>
+              <div class="chat-bubble chat-ai">Dans ce cas, il faut voir si votre besoin principal est l accueil et la qualification ou la conversion du parcours.</div>
+              <div class="chat-bubble chat-user">Je veux quelque chose de propre, structure et evolutif.</div>
+              <div class="chat-bubble chat-ai">C est exactement la logique de cette architecture : une offre claire, un niveau lisible, puis une continuite avec abonnement si besoin.</div>
+            </div>
+
+            <div class="chat-actions">
+              <a href="#contact" class="btn btn-primary">Commencer</a>
+              <a href="#abonnements" class="btn btn-secondary">Voir les abonnements</a>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="cta-band">
+          <h3>Une base enfin propre, belle et exploitable.</h3>
+          <p>
+            Cette version reprend les bonnes offres, les bons niveaux, les bons abonnements et les bons liens,
+            avec un rendu plus propre pour les clients.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#contact" class="btn btn-primary">Passer a l activation</a>
+            <a href="#offres" class="btn btn-secondary">Comparer les offres</a>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <div class="footer-inner">
+          <div class="footer-left">
+            <strong>System Auto Lab</strong>
+            <span>Design vivant, logique reelle.</span>
+          </div>
+
+          <div class="footer-links">
+            <a href="#offres">Offres</a>
+            <a href="#abonnements">Abonnements</a>
+            <a href="#process">Process</a>
+            <a href="#faq">FAQ</a>
+            <a href="#contact">Contact</a>
+          </div>
+        </div>
+      </footer>
+    </main>
+
+    <a href="#contact" class="floating-contact">
+      <span>+</span>
+      <span>Reserver</span>
+    </a>
+  </div>
+
+  <script>
+    document.querySelectorAll('.faq-button').forEach(function(button) {
+      button.addEventListener('click', function() {
+        var item = button.closest('.faq-item');
+        item.classList.toggle('open');
+      });
+    });
+  </script>
+</body>
+</html>
