@@ -11,15 +11,14 @@
       --panel: #0f1728;
       --panel-2: #101b2f;
       --line: rgba(255,255,255,0.08);
+      --line-strong: rgba(255,255,255,0.14);
       --text: #f4f7fb;
       --muted: #aab4c7;
-
       --blue: #7fdfff;
       --blue-2: #2ca7ff;
       --green: #8effcb;
       --green-2: #35d48d;
       --violet: #ab86ff;
-
       --shadow: 0 24px 60px rgba(0,0,0,0.35);
       --radius: 24px;
       --radius-lg: 32px;
@@ -156,12 +155,12 @@
     }
 
     .hero {
-      padding: 42px 0 26px;
+      padding: 42px 0 30px;
     }
 
     .hero-grid {
       display: grid;
-      grid-template-columns: 1.12fr 0.88fr;
+      grid-template-columns: 1.08fr 0.92fr;
       gap: 22px;
       align-items: stretch;
     }
@@ -284,7 +283,7 @@
 
     .stat strong {
       display: block;
-      font-size: 20px;
+      font-size: 18px;
       margin-bottom: 6px;
     }
 
@@ -412,7 +411,7 @@
     .hud-d { right: 24px; bottom: 36px; }
 
     .section {
-      padding: 56px 0 10px;
+      padding: 58px 0 10px;
     }
 
     .section-head {
@@ -439,6 +438,11 @@
       letter-spacing: -0.04em;
     }
 
+    h3 {
+      margin: 0 0 10px;
+      letter-spacing: -0.02em;
+    }
+
     .section-head p {
       margin: 0;
       color: var(--muted);
@@ -446,12 +450,13 @@
       line-height: 1.72;
     }
 
-    .offer-grid {
+    .agency-grid {
       display: grid;
-      grid-template-columns: repeat(5, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 16px;
     }
 
+    .agency-card,
     .offer-card,
     .sub-card,
     .why-card,
@@ -465,6 +470,22 @@
       border: 1px solid rgba(255,255,255,0.08);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
+    }
+
+    .agency-card {
+      padding: 22px;
+    }
+
+    .agency-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .offer-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
     }
 
     .offer-card {
@@ -483,9 +504,8 @@
     }
 
     .offer-top h3 {
-      margin: 0;
       font-size: 18px;
-      letter-spacing: -0.02em;
+      margin: 0;
     }
 
     .tag {
@@ -503,7 +523,7 @@
       color: var(--muted);
       font-size: 14px;
       line-height: 1.6;
-      min-height: 70px;
+      min-height: 88px;
       margin: 0 0 12px;
     }
 
@@ -566,13 +586,15 @@
       text-decoration: none;
       font-weight: bold;
       font-size: 14px;
-      background: linear-gradient(135deg, var(--blue), var(--green));
-      color: #081019;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.10);
+      color: #eef5ff;
       width: auto;
+      transition: 0.2s ease;
     }
 
     .buy-link:hover {
-      filter: brightness(1.03);
+      background: rgba(255,255,255,0.08);
       transform: translateY(-1px);
     }
 
@@ -967,7 +989,8 @@
     @media (max-width: 1080px) {
       .hero-grid,
       .why-grid,
-      .contact-grid {
+      .contact-grid,
+      .agency-grid {
         grid-template-columns: 1fr;
       }
 
@@ -1033,16 +1056,15 @@
           <div class="brand-mark"></div>
           <div class="brand-text">
             <strong>System Auto Lab</strong>
-            <span>Design vivant, logique reelle.</span>
+            <span>Automatisation IA pour structures ambitieuses.</span>
           </div>
         </a>
-
         <nav class="nav">
-          <a href="#offres">Offres</a>
+          <a href="#offres">Systemes</a>
           <a href="#abonnements">Abonnements</a>
           <a href="#process">Process</a>
           <a href="#faq">FAQ</a>
-          <a href="#contact" class="nav-cta">Reserver un echange</a>
+          <a href="#contact" class="nav-cta">Nous contacter</a>
         </nav>
       </div>
     </header>
@@ -1053,40 +1075,40 @@
           <div class="hero-copy">
             <div class="badge">
               <span class="badge-dot"></span>
-              5 offres principales, 3 formats par offre, 5 abonnements IA
+              Systeme d automatisation IA, contenu, tunnel, support et back office
             </div>
 
             <h1>
               Automatisez votre activite
-              <span class="accent">sans perdre en controle</span>
+              <span class="accent">avec plus de clarte et de puissance</span>
             </h1>
 
             <p class="lead">
-              Des systemes prets a l emploi pour accueillir vos prospects, produire votre contenu,
-              fluidifier votre tunnel, alleger votre SAV et structurer votre back office.
+              Nous concevons des systemes IA concrets pour vous aider a mieux accueillir vos prospects,
+              produire plus regulierement, fluidifier votre parcours client et structurer votre execution.
             </p>
 
             <div class="hero-actions">
-              <a href="#offres" class="btn btn-primary">Voir les offres</a>
-              <a href="#contact" class="btn btn-secondary">Reserver un echange</a>
+              <a href="#offres" class="btn btn-primary">Decouvrir les systemes</a>
+              <a href="#contact" class="btn btn-secondary">Parler de votre besoin</a>
             </div>
 
             <div class="hero-stats">
               <div class="stat">
-                <strong>Moins de repetition</strong>
-                <span>Automatisez ce qui ralentit votre activite</span>
+                <strong>Moins de friction</strong>
+                <span>Des systemes pensés pour simplifier ce qui vous ralentit.</span>
+              </div>
+              <div class="stat">
+                <strong>Plus de productivite</strong>
+                <span>Vous recentrez votre energie sur votre vrai travail.</span>
               </div>
               <div class="stat">
                 <strong>Plus de clarte</strong>
-                <span>Des systemes simples a comprendre et a activer</span>
+                <span>Chaque systeme repond a une fonction precise de votre activite.</span>
               </div>
               <div class="stat">
-                <strong>Plus de temps</strong>
-                <span>Recentrez-vous sur votre vrai travail</span>
-              </div>
-              <div class="stat">
-                <strong>Activation rapide</strong>
-                <span>Choisissez une offre et le bon niveau</span>
+                <strong>Plus d evolution</strong>
+                <span>Vous pouvez commencer simplement puis faire monter la structure.</span>
               </div>
             </div>
           </div>
@@ -1100,37 +1122,66 @@
 
               <div class="hud hud-a">
                 <strong>Receptionniste IA</strong>
-                <span>Accueille et qualifie les demandes plus proprement.</span>
+                <span>Accueille, repond et qualifie vos demandes avec plus de fluidite.</span>
               </div>
 
               <div class="hud hud-b">
                 <strong>Machine a contenu</strong>
-                <span>Aide a produire et diffuser avec plus de regularite.</span>
+                <span>Structure la production et la diffusion de votre presence digitale.</span>
               </div>
 
               <div class="hud hud-c">
-                <strong>Tunnel et SAV</strong>
-                <span>Convertit mieux et reduit la friction client.</span>
+                <strong>Tunnel et support</strong>
+                <span>Renforce la conversion et reduit la friction dans le suivi client.</span>
               </div>
 
               <div class="hud hud-d">
                 <strong>Back Office automatise</strong>
-                <span>Remet de l ordre dans l execution interne.</span>
+                <span>Rend l execution interne plus propre, plus stable et plus legere.</span>
               </div>
             </div>
           </div>
         </div>
       </section>
 
+      <section class="section">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">ce que nous faisons</span>
+            <h2>Des systemes IA pensés pour des usages concrets</h2>
+          </div>
+          <p>
+            Nous ne vendons pas une technologie abstraite. Nous structurons des automatismes utiles
+            pour des zones precises de votre activite.
+          </p>
+        </div>
+
+        <div class="agency-grid">
+          <article class="agency-card">
+            <h3>Automatisation orientee resultat</h3>
+            <p>Chaque systeme est pensé pour faire gagner du temps, reduire la repetition et fluidifier votre fonctionnement.</p>
+          </article>
+
+          <article class="agency-card">
+            <h3>Logique claire et evolutive</h3>
+            <p>Vous pouvez commencer avec une base simple, puis renforcer votre systeme selon votre rythme et votre ambition.</p>
+          </article>
+
+          <article class="agency-card">
+            <h3>Approche premium mais lisible</h3>
+            <p>Le visiteur comprend rapidement ce que fait chaque systeme, a quoi il sert et quelle direction prendre.</p>
+          </article>
+        </div>
+      </section>
+
       <section class="section" id="offres">
         <div class="section-head">
           <div>
-            <span class="eyebrow">offres</span>
-            <h2>Choisissez le systeme qui debloque votre activite</h2>
+            <span class="eyebrow">systemes</span>
+            <h2>Choisissez la bonne base pour votre activite</h2>
           </div>
           <p>
-            Chaque offre repond a un besoin concret du marche : mieux accueillir,
-            mieux produire, mieux convertir, mieux repondre, mieux organiser.
+            Chaque systeme repond a une fonction claire : accueil, contenu, conversion, support ou organisation interne.
           </p>
         </div>
 
@@ -1140,27 +1191,27 @@
               <h3>Receptionniste IA</h3>
               <span class="tag">accueil</span>
             </div>
-            <p class="offer-desc">Pour ne plus perdre de temps sur les premiers echanges, les demandes repetitives et la qualification des prospects.</p>
+            <p class="offer-desc">Repond automatiquement aux premiers messages, qualifie les demandes et rend l entree plus fluide pour vos prospects.</p>
 
             <div class="tier">
               <div class="tier-head"><strong>Starter</strong><span class="tier-price">49 EUR</span></div>
-              <p>Pose une premiere base d accueil automatise simple et utile.</p>
+              <p>Une premiere base simple pour automatiser l accueil et le tri initial.</p>
               <div class="chips"><span class="chip">accueil</span><span class="chip">tri</span></div>
-              <a class="buy-link" href="https://buy.stripe.com/eVq00i3Th1f9aKG57A0RG08" target="_blank">Activer</a>
+              <a class="buy-link" href="#contact">En savoir plus</a>
             </div>
 
             <div class="tier">
               <div class="tier-head"><strong>Pro</strong><span class="tier-price">149 EUR</span></div>
-              <p>Renforce la qualification et l orientation des demandes.</p>
+              <p>Renforce la qualification, la structure de reponse et l orientation.</p>
               <div class="chips"><span class="chip">qualification</span><span class="chip">pro</span></div>
-              <a class="buy-link" href="https://buy.stripe.com/6oUaEW1L91f99GCcA20RG09" target="_blank">Activer</a>
+              <a class="buy-link" href="#contact">En savoir plus</a>
             </div>
 
             <div class="tier">
               <div class="tier-head"><strong>Premium</strong><span class="tier-price">299 EUR</span></div>
-              <p>Version la plus complete pour une experience d accueil plus premium.</p>
+              <p>Version la plus complete pour une experience d accueil plus premium et plus aboutie.</p>
               <div class="chips"><span class="chip">premium</span><span class="chip">pipeline</span></div>
-              <a class="buy-link" href="https://buy.stripe.com/00w5kC0H52jd4migQi0RG0a" target="_blank">Activer</a>
+              <a class="buy-link" href="#contact">En savoir plus</a>
             </div>
           </article>
 
@@ -1169,27 +1220,27 @@
               <h3>Machine a contenu</h3>
               <span class="tag">contenu</span>
             </div>
-            <p class="offer-desc">Pour produire plus regulierement, mieux organiser vos idees et garder un flux de contenu vivant sans vous epuiser.</p>
+            <p class="offer-desc">Aide a structurer la production et la diffusion de contenu pour maintenir une presence reguliere sans epuisement.</p>
 
             <div class="tier">
               <div class="tier-head"><strong>Starter</strong><span class="tier-price">79 EUR</span></div>
-              <p>Lance une premiere machine a contenu plus stable.</p>
+              <p>Lance une premiere machine de production plus stable et mieux organisée.</p>
               <div class="chips"><span class="chip">base</span><span class="chip">contenu</span></div>
-              <a class="buy-link" href="https://buy.stripe.com/4gMcN49dBf5Z7yugQi0RG0b" target="_blank">Activer</a>
+              <a class="buy-link" href="#contact">En savoir plus</a>
             </div>
 
             <div class="tier">
               <div class="tier-head"><strong>Pro</strong><span class="tier-price">199 EUR</span></div>
-              <p>Structure mieux le workflow de production et de diffusion.</p>
+              <p>Structure davantage le workflow de creation, d organisation et de diffusion.</p>
               <div class="chips"><span class="chip">workflow</span><span class="chip">pro</span></div>
-              <a class="buy-link" href="https://buy.stripe.com/4gMbJ0cpN7Dx8Cy6bE0RG0c" target="_blank">Activer</a>
+              <a class="buy-link" href="#contact">En savoir plus</a>
             </div>
 
             <div class="tier">
               <div class="tier-head"><strong>Premium</strong><span class="tier-price">399 EUR</span></div>
-              <p>Pousse le moteur de contenu plus loin en rythme et en volume.</p>
+              <p>Pousse le moteur de contenu plus loin en volume, en regularite et en tenue dans le temps.</p>
               <div class="chips"><span class="chip">premium</span><span class="chip">scale</span></div>
-              <a class="buy-link" href="https://buy.stripe.com/eVqeVcgG3e1V2ea1Vo0RG0d" target="_blank">Activer</a>
+              <a class="buy-link" href="#contact">En savoir plus</a>
             </div>
           </article>
 
@@ -1198,27 +1249,27 @@
               <h3>Tunnel automatise</h3>
               <span class="tag">conversion</span>
             </div>
-            <p class="offer-desc">Pour transformer plus clairement l interet en action, et rendre votre parcours client plus fluide.</p>
+            <p class="offer-desc">Clarifie le parcours entre l interet initial et le passage a l action, pour transformer plus proprement vos visiteurs en clients.</p>
 
             <div class="tier">
               <div class="tier-head"><strong>Starter</strong><span class="tier-price">99 EUR</span></div>
-              <p>Pose une premiere structure de tunnel claire et directe.</p>
+              <p>Pose une premiere logique de tunnel simple, claire et directement exploitable.</p>
               <div class="chips"><span class="chip">tunnel</span><span class="chip">base</span></div>
-              <a class="buy-link" href="https://buy.stripe.com/28EeVccpN5vp3ie43w0RG0e" target="_blank">Activer</a>
+              <a class="buy-link" href="#contact">En savoir plus</a>
             </div>
 
             <div class="tier">
               <div class="tier-head"><strong>Pro</strong><span class="tier-price">249 EUR</span></div>
-              <p>Rend le parcours plus coherent entre interet et passage a l action.</p>
+              <p>Rend le parcours plus coherent entre decouverte, orientation et conversion.</p>
               <div class="chips"><span class="chip">conversion</span><span class="chip">pro</span></div>
-              <a class="buy-link" href="https://buy.stripe.com/28EfZgahFaPJ7yugQi0RG0f" target="_blank">Activer</a>
+              <a class="buy-link" href="#contact">En savoir plus</a>
             </div>
 
             <div class="tier">
               <div class="tier-head"><strong>Premium</strong><span class="tier-price">499 EUR</span></div>
-              <p>Version la plus dense pour renforcer la logique du tunnel.</p>
+              <p>Version la plus dense pour renforcer toute la logique du parcours client.</p>
               <div class="chips"><span class="chip">premium</span><span class="chip">avance</span></div>
-              <a class="buy-link" href="https://buy.stripe.com/bJe5kCcpN5vp0628jM0RG0g" target="_blank">Activer</a>
+              <a class="buy-link" href="#contact">En savoir plus</a>
             </div>
           </article>
 
@@ -1227,27 +1278,27 @@
               <h3>SAV automatise</h3>
               <span class="tag">support</span>
             </div>
-            <p class="offer-desc">Pour repondre plus vite, reduire la charge mentale du support et garder une meilleure qualite de suivi.</p>
+            <p class="offer-desc">Gere les reponses repetitives, fluidifie le support et soulage la charge mentale liee au suivi client.</p>
 
             <div class="tier">
-              <div class="tier-head"><strong>Starter</strong><span class="tier-price">demarrage</span></div>
-              <p>Fluidifie le support de base et les demandes repetitives.</p>
+              <div class="tier-head"><strong>Starter</strong><span class="tier-price">sur demande</span></div>
+              <p>Premier niveau pour fluidifier le support courant et les demandes recurrentes.</p>
               <div class="chips"><span class="chip">support</span><span class="chip">starter</span></div>
-              <a class="buy-link" href="https://buy.stripe.com/5kQ28q61p3nh1a61Vo0RG0h" target="_blank">Activer</a>
+              <a class="buy-link" href="#contact">En savoir plus</a>
             </div>
 
             <div class="tier">
-              <div class="tier-head"><strong>Pro</strong><span class="tier-price">renforce</span></div>
-              <p>Renforce la structure SAV et la qualite de reponse.</p>
+              <div class="tier-head"><strong>Pro</strong><span class="tier-price">sur demande</span></div>
+              <p>Renforce la qualite de reponse, l organisation du support et la stabilite du suivi.</p>
               <div class="chips"><span class="chip">sav</span><span class="chip">pro</span></div>
-              <a class="buy-link" href="https://buy.stripe.com/9B6bJ0fBZ7DxcSO7fI0RG0i" target="_blank">Activer</a>
+              <a class="buy-link" href="#contact">En savoir plus</a>
             </div>
 
             <div class="tier">
-              <div class="tier-head"><strong>Premium</strong><span class="tier-price">dense</span></div>
-              <p>Version la plus complete pour un support plus large et mieux articule.</p>
+              <div class="tier-head"><strong>Premium</strong><span class="tier-price">sur demande</span></div>
+              <p>Version la plus complete pour un support plus large, plus propre et plus structuré.</p>
               <div class="chips"><span class="chip">premium</span><span class="chip">support</span></div>
-              <a class="buy-link" href="https://buy.stripe.com/aFa00i2Pd5vpbOKcA20RG0j" target="_blank">Activer</a>
+              <a class="buy-link" href="#contact">En savoir plus</a>
             </div>
           </article>
 
@@ -1256,27 +1307,27 @@
               <h3>Back office automatise</h3>
               <span class="tag">interne</span>
             </div>
-            <p class="offer-desc">Pour alleger les taches internes, remettre de l ordre dans le fonctionnement et eviter les pertes d energie invisibles.</p>
+            <p class="offer-desc">Automatise certaines taches internes pour remettre de l ordre, alleger l execution et stabiliser le fonctionnement quotidien.</p>
 
             <div class="tier">
-              <div class="tier-head"><strong>Starter</strong><span class="tier-price">structure</span></div>
-              <p>Pose une base plus claire dans les operations internes.</p>
+              <div class="tier-head"><strong>Starter</strong><span class="tier-price">sur demande</span></div>
+              <p>Pose une premiere base plus claire dans les operations internes.</p>
               <div class="chips"><span class="chip">ops</span><span class="chip">starter</span></div>
-              <a class="buy-link" href="https://buy.stripe.com/aFa7sK1L91f91a66bE0RG0k" target="_blank">Activer</a>
+              <a class="buy-link" href="#contact">En savoir plus</a>
             </div>
 
             <div class="tier">
-              <div class="tier-head"><strong>Pro</strong><span class="tier-price">renforce</span></div>
-              <p>Rend le fonctionnement interne plus propre et plus fluide.</p>
+              <div class="tier-head"><strong>Pro</strong><span class="tier-price">sur demande</span></div>
+              <p>Rend le fonctionnement interne plus fluide, plus lisible et plus stable.</p>
               <div class="chips"><span class="chip">back office</span><span class="chip">pro</span></div>
-              <a class="buy-link" href="https://buy.stripe.com/fZucN4dtR3nhf0W2Zs0RG0l" target="_blank">Activer</a>
+              <a class="buy-link" href="#contact">En savoir plus</a>
             </div>
 
             <div class="tier">
-              <div class="tier-head"><strong>Premium</strong><span class="tier-price">avance</span></div>
-              <p>Pousse plus loin l automatisation du fonctionnement interne.</p>
+              <div class="tier-head"><strong>Premium</strong><span class="tier-price">sur demande</span></div>
+              <p>Pousse plus loin l automatisation de la structure interne et la reduction des taches invisibles.</p>
               <div class="chips"><span class="chip">premium</span><span class="chip">interne</span></div>
-              <a class="buy-link" href="https://buy.stripe.com/28E6oGfBZf5Z4mi2Zs0RG0m" target="_blank">Activer</a>
+              <a class="buy-link" href="#contact">En savoir plus</a>
             </div>
           </article>
         </div>
@@ -1289,8 +1340,7 @@
             <h2>Faites evoluer votre systeme dans le temps</h2>
           </div>
           <p>
-            Une fois votre base activee, ces abonnements vous permettent d ameliorer,
-            maintenir ou accelerer votre systeme selon votre rythme et vos objectifs.
+            Une fois votre base activee, ces abonnements permettent de maintenir, renforcer ou accelerer votre systeme selon vos objectifs.
           </p>
         </div>
 
@@ -1305,20 +1355,20 @@
               <li>Maintenance logique</li>
               <li>Stabilite generale</li>
             </ul>
-            <a href="https://buy.stripe.com/3cIcN44Xl7Dx0626bE0RG0n" target="_blank" class="btn btn-secondary">Activer</a>
+            <a href="#contact" class="btn btn-secondary">En savoir plus</a>
           </article>
 
           <article class="sub-card">
             <span class="sub-badge">content</span>
             <h3>Content Engine IA</h3>
             <div class="sub-price">Moteur contenu<span>abonnement IA</span></div>
-            <p>Pour faire tourner votre logique contenu de maniere plus reguliere.</p>
+            <p>Pour maintenir une logique de contenu plus reguliere et plus solide.</p>
             <ul class="list">
               <li>Production assistee</li>
               <li>Continuite du flux</li>
               <li>Rythme plus stable</li>
             </ul>
-            <a href="https://buy.stripe.com/9B66oG89x9LF9GC0Rk0RG0o" target="_blank" class="btn btn-secondary">Activer</a>
+            <a href="#contact" class="btn btn-secondary">En savoir plus</a>
           </article>
 
           <article class="sub-card">
@@ -1331,7 +1381,7 @@
               <li>Evolution du systeme</li>
               <li>Amelioration continue</li>
             </ul>
-            <a href="https://buy.stripe.com/7sY14mcpN5vp5qm43w0RG0p" target="_blank" class="btn btn-primary">Activer</a>
+            <a href="#contact" class="btn btn-primary">En savoir plus</a>
           </article>
 
           <article class="sub-card">
@@ -1344,20 +1394,20 @@
               <li>Amplification progressive</li>
               <li>Automatisation plus large</li>
             </ul>
-            <a href="https://buy.stripe.com/7sY8wO4Xle1V1a60Rk0RG0q" target="_blank" class="btn btn-secondary">Activer</a>
+            <a href="#contact" class="btn btn-secondary">En savoir plus</a>
           </article>
 
           <article class="sub-card">
             <span class="sub-badge">flow</span>
             <h3>Client Flow IA</h3>
             <div class="sub-price">Flux client continu<span>abonnement IA</span></div>
-            <p>Pour ameliorer le mouvement client, le suivi et la continuite du parcours.</p>
+            <p>Pour ameliorer le suivi, le mouvement client et la continuite du parcours.</p>
             <ul class="list">
               <li>Fluidite du parcours</li>
               <li>Moins de friction</li>
               <li>Continuite client</li>
             </ul>
-            <a href="https://buy.stripe.com/dRm6oG4XlcXR1a62Zs0RG0r" target="_blank" class="btn btn-secondary">Activer</a>
+            <a href="#contact" class="btn btn-secondary">En savoir plus</a>
           </article>
         </div>
       </section>
@@ -1366,30 +1416,32 @@
         <div class="section-head">
           <div>
             <span class="eyebrow">pourquoi nous</span>
-            <h2>Pourquoi choisir System Auto Lab</h2>
+            <h2>Une approche claire, concrete et orientee activite</h2>
           </div>
           <p>
-            Vous n achetez pas de la theorie. Vous choisissez un systeme pense pour resoudre
-            un point precis de votre activite.
+            Vous ne cherchez pas une technologie impressionnante. Vous cherchez une structure utile, stable et exploitable.
           </p>
         </div>
 
         <div class="why-grid">
           <article class="why-card">
-            <h3>Des solutions concretes</h3>
-            <p>Chaque offre repond a un besoin reel : accueil, contenu, tunnel, support ou organisation interne.</p>
+            <h3>Des systemes pensés pour le terrain</h3>
+            <p>Chaque systeme est relié a un usage concret : accueillir, produire, convertir, repondre ou mieux organiser.</p>
           </article>
+
           <article class="why-card">
-            <h3>Un gain de temps reel</h3>
-            <p>Moins de repetition, moins de friction, plus d energie pour ce qui compte vraiment.</p>
+            <h3>Une logique de progression simple</h3>
+            <p>Starter, Pro, Premium : une montee en puissance lisible selon votre niveau de maturite.</p>
           </article>
+
           <article class="why-card">
-            <h3>Une montee en puissance simple</h3>
-            <p>Commencez avec une base claire, puis faites evoluer votre systeme a votre rythme.</p>
+            <h3>Une vision long terme</h3>
+            <p>Les abonnements prolongent la valeur du systeme et permettent de faire evoluer la structure au lieu de figer un achat unique.</p>
           </article>
+
           <article class="why-card">
-            <h3>Une approche premium et lisible</h3>
-            <p>Des offres comprehensibles, une presentation propre et une logique pensee pour des professionnels.</p>
+            <h3>Un positionnement plus premium</h3>
+            <p>Moins de brutalite commerciale, plus de clarte, plus de confiance, plus de lisibilite dans le parcours.</p>
           </article>
         </div>
       </section>
@@ -1398,31 +1450,34 @@
         <div class="section-head">
           <div>
             <span class="eyebrow">process</span>
-            <h2>Comment ca se passe</h2>
+            <h2>Comment cela se passe</h2>
           </div>
-          <p>Un parcours simple pour rendre la decision plus nette et l entree plus rassurante.</p>
+          <p>Un parcours simple pour comprendre, choisir et avancer sans friction inutile.</p>
         </div>
 
         <div class="process-grid">
           <article class="step-card">
             <div class="step-number">01</div>
-            <h3>Vous choisissez votre besoin</h3>
-            <p>Accueil, contenu, tunnel, SAV ou back office.</p>
+            <h3>Vous identifiez votre besoin</h3>
+            <p>Vous partez de la zone qui vous ralentit le plus aujourd hui.</p>
           </article>
+
           <article class="step-card">
             <div class="step-number">02</div>
-            <h3>Vous choisissez votre niveau</h3>
-            <p>Starter, Pro ou Premium selon votre activite.</p>
+            <h3>Vous choisissez le bon niveau</h3>
+            <p>Starter, Pro ou Premium selon votre contexte et votre ambition.</p>
           </article>
+
           <article class="step-card">
             <div class="step-number">03</div>
-            <h3>Vous activez votre systeme</h3>
-            <p>Vous passez a une structure plus simple, plus claire et plus efficace.</p>
+            <h3>Vous activez la bonne base</h3>
+            <p>Vous mettez en place une structure plus claire, plus stable et plus exploitable.</p>
           </article>
+
           <article class="step-card">
             <div class="step-number">04</div>
             <h3>Vous faites evoluer si besoin</h3>
-            <p>Avec un abonnement IA, vous continuez a ameliorer votre systeme dans le temps.</p>
+            <p>Avec un abonnement, vous prolongez et renforcez la valeur de votre systeme.</p>
           </article>
         </div>
       </section>
@@ -1433,7 +1488,7 @@
             <span class="eyebrow">faq</span>
             <h2>Questions frequentes</h2>
           </div>
-          <p>Une FAQ simple pour rassurer avant la prise de contact ou l achat direct.</p>
+          <p>Une FAQ simple pour rassurer avant la prise de contact ou la suite du parcours.</p>
         </div>
 
         <div class="faq-wrap">
@@ -1443,7 +1498,7 @@
               <span>+</span>
             </button>
             <div class="faq-answer">
-              Si vous debutez, choisissez simplement la zone qui vous ralentit le plus aujourd hui, puis entrez en Starter.
+              Si vous debutez, partez simplement de la zone qui vous ralentit le plus aujourd hui puis entrez par le niveau Starter.
             </div>
           </article>
 
@@ -1463,7 +1518,7 @@
               <span>+</span>
             </button>
             <div class="faq-answer">
-              Non. Les abonnements servent a prolonger et entretenir la valeur du systeme, mais l activation initiale peut exister seule.
+              Non. Les abonnements servent a prolonger et renforcer la valeur du systeme, mais l activation initiale peut exister seule.
             </div>
           </article>
 
@@ -1473,7 +1528,7 @@
               <span>+</span>
             </button>
             <div class="faq-answer">
-              Dans ce cas, reservez un echange afin d identifier le meilleur point d entree pour votre situation.
+              Dans ce cas, contactez-nous afin d identifier le meilleur point d entree pour votre situation.
             </div>
           </article>
 
@@ -1483,7 +1538,7 @@
               <span>+</span>
             </button>
             <div class="faq-answer">
-              Oui. La structure, les liens Stripe et la navigation sont en place. Il reste seulement a connecter le formulaire si vous voulez une entree automatisee reelle.
+              Oui. La structure est en place et peut deja servir de base claire de presentation et d orientation.
             </div>
           </article>
         </div>
@@ -1493,29 +1548,30 @@
         <div class="section-head">
           <div>
             <span class="eyebrow">positionnement</span>
-            <h2>Une boutique claire, pas un labyrinthe</h2>
+            <h2>Une vitrine plus claire, plus credible, plus lisible</h2>
           </div>
           <p>
-            Ici, le client ne se perd pas dans une liste floue. Il voit les bons points d entree,
-            comprend les niveaux et peut agir rapidement.
+            Ici, le visiteur comprend mieux ce que vous proposez, ce que chaque systeme fait et comment avancer sans se perdre.
           </p>
         </div>
 
         <div class="news-grid">
           <article class="news-card">
-            <span class="k">structure</span>
-            <h3>5 offres suffisent a clarifier l entree</h3>
-            <p>Au lieu d un empilement confus, le visiteur voit tout de suite les grandes zones d action.</p>
+            <span class="k">clarte</span>
+            <h3>Des services lisibles</h3>
+            <p>Chaque systeme est relié a une fonction concrete et compréhensible pour un prospect non technique.</p>
           </article>
+
           <article class="news-card">
-            <span class="k">hierarchie</span>
-            <h3>3 niveaux rendent la decision plus simple</h3>
-            <p>Pas trop de paliers, pas de confusion, juste une progression lisible.</p>
+            <span class="k">credibilite</span>
+            <h3>Une presentation plus agence</h3>
+            <p>Moins de brut, moins de confusion, plus de structure, plus de perception premium.</p>
           </article>
+
           <article class="news-card">
-            <span class="k">continuite</span>
-            <h3>Les abonnements prolongent la valeur</h3>
-            <p>Ils donnent une suite logique au systeme au lieu d un achat ponctuel sans lendemain.</p>
+            <span class="k">orientation</span>
+            <h3>Un meilleur parcours</h3>
+            <p>Le visiteur peut comprendre, comparer, puis entrer en contact plus naturellement.</p>
           </article>
         </div>
       </section>
@@ -1533,16 +1589,16 @@
 
         <div class="contact-grid">
           <article class="contact-card">
-            <h3>Decrivez votre besoin</h3>
-            <p>Le but est d identifier l offre principale, le bon niveau et l eventuel abonnement a ajouter ensuite.</p>
+            <h3>Decrivez ce que vous voulez automatiser</h3>
+            <p>Le but est d identifier la bonne base, le bon niveau et la bonne direction pour votre activite.</p>
 
             <div class="contact-links">
-              <a class="contact-link" href="https://www.instagram.com/levif_automate?igsh=NW8yb2toYnMwajAw" target="_blank">Instagram</a>
-              <a class="contact-link" href="https://www.facebook.com/share/1HCPHCoUDj/" target="_blank">Facebook</a>
-              <a class="contact-link" href="#contact">Formulaire direct</a>
+              <a class="contact-link" href="https://www.instagram.com/levif_automate?igsh=NW8yb2toYnMwajAw" target="_blank" rel="noopener">Instagram</a>
+              <a class="contact-link" href="https://www.facebook.com/share/1HCPHCoUDj/" target="_blank" rel="noopener">Facebook</a>
+              <a class="contact-link" href="mailto:lecocqerick1@gmail.com">Email direct</a>
             </div>
 
-            <form onsubmit="event.preventDefault(); alert('Formulaire pret a brancher ensuite a Make si besoin.');">
+            <form onsubmit="event.preventDefault(); alert('Formulaire pret a etre branche plus tard.');">
               <div class="form-grid">
                 <div class="field">
                   <label for="name">Nom</label>
@@ -1555,13 +1611,14 @@
                 </div>
 
                 <div class="field">
-                  <label for="offer">Offre visee</label>
+                  <label for="offer">Systeme vise</label>
                   <select id="offer">
                     <option>Receptionniste IA</option>
                     <option>Machine a contenu</option>
                     <option>Tunnel automatise</option>
                     <option>SAV automatise</option>
                     <option>Back office automatise</option>
+                    <option>Je ne sais pas encore</option>
                   </select>
                 </div>
 
@@ -1577,31 +1634,31 @@
 
                 <div class="field full">
                   <label for="message">Besoin</label>
-                  <textarea id="message" placeholder="Decrivez votre besoin, ce que vous voulez automatiser, et ce qui vous ralentit aujourd hui."></textarea>
+                  <textarea id="message" placeholder="Decrivez votre besoin, ce que vous voulez automatiser et ce qui vous ralentit aujourd hui."></textarea>
                 </div>
               </div>
 
               <div class="hero-actions" style="margin-top:16px;">
                 <button class="btn btn-primary" type="submit">Envoyer la demande</button>
-                <a href="#offres" class="btn btn-secondary">Revoir les offres</a>
+                <a href="#offres" class="btn btn-secondary">Revoir les systemes</a>
               </div>
 
               <div class="form-note">
-                Cette version du formulaire est prete visuellement. Vous pourrez ensuite la connecter a Make, Gmail, Google Sheets ou autre.
+                Cette version du formulaire est une base visuelle. Elle peut ensuite etre reliée a vos scenarios et a vos outils.
               </div>
             </form>
           </article>
 
           <article class="chat-card">
-            <h3>Assistant - apercu</h3>
-            <p>Bloc conversationnel visuel en attendant un eventuel vrai module connecte.</p>
+            <h3>Orientation simple</h3>
+            <p>Exemple de logique d accueil pour aider un prospect a se situer rapidement.</p>
 
             <div class="chat-window">
               <div class="chat-bubble chat-ai">Bonjour. Quelle zone voulez-vous automatiser en priorite ?</div>
               <div class="chat-bubble chat-user">J hesite entre Receptionniste IA et Tunnel automatise.</div>
-              <div class="chat-bubble chat-ai">Dans ce cas, il faut voir si votre besoin principal est l accueil et la qualification ou la conversion du parcours.</div>
+              <div class="chat-bubble chat-ai">Dans ce cas, il faut voir si votre besoin principal est l accueil des demandes ou la conversion du parcours client.</div>
               <div class="chat-bubble chat-user">Je veux quelque chose de propre, structure et evolutif.</div>
-              <div class="chat-bubble chat-ai">C est exactement la logique de cette architecture : une offre claire, un niveau lisible, puis une continuite avec abonnement si besoin.</div>
+              <div class="chat-bubble chat-ai">C est exactement la logique de cette architecture : un systeme clair, un niveau lisible, puis une evolution si besoin.</div>
             </div>
 
             <div class="chat-actions">
@@ -1614,15 +1671,13 @@
 
       <section class="section">
         <div class="cta-band">
-          <h3>Une base enfin propre, belle et exploitable.</h3>
+          <h3>Une base plus propre, plus claire et plus credible.</h3>
           <p>
-            Cette version reprend les bonnes offres, les bons niveaux, les bons abonnements et les bons liens,
-            avec un rendu plus propre pour les clients.
+            Cette version transforme ton site en vitrine plus agence, plus lisible pour un prospect et plus cohérente avec un vrai systeme IA.
           </p>
-
           <div class="hero-actions">
-            <a href="#contact" class="btn btn-primary">Passer a l activation</a>
-            <a href="#offres" class="btn btn-secondary">Comparer les offres</a>
+            <a href="#offres" class="btn btn-primary">Explorer les systemes</a>
+            <a href="#contact" class="btn btn-secondary">Parler de mon besoin</a>
           </div>
         </div>
       </section>
@@ -1635,7 +1690,7 @@
           </div>
 
           <div class="footer-links">
-            <a href="#offres">Offres</a>
+            <a href="#offres">Systemes</a>
             <a href="#abonnements">Abonnements</a>
             <a href="#process">Process</a>
             <a href="#faq">FAQ</a>
@@ -1647,7 +1702,7 @@
 
     <a href="#contact" class="floating-contact">
       <span>+</span>
-      <span>Reserver</span>
+      <span>Contact</span>
     </a>
   </div>
 
